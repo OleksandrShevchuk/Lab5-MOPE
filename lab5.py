@@ -134,18 +134,22 @@ ft = {1: 4.2, 2: 3.3, 3: 2.9, 4: 2.7, 5: 2.5, 6: 2.4}
 def_matrx = np.array([[-2, 2], [-2, 4], [-3, 9]])
 m = 3
 
-
+counter1 = 0
+counter2 = 0
 count = 2
 flag_of_model = False
-while flag_of_model is False:
+
+for i in range(100):
     norm_matrix = make_linear_equation()[0]
     plan_matr = make_linear_equation()[1]
     if count == 1:
         norm_matrix = make_equation_with_interaction_effect(norm_matrix, plan_matr)[0]
         plan_matr = make_equation_with_interaction_effect(norm_matrix, plan_matr)[1]
+        counter1 += 1
     elif count > 1:
         plan_matr = make_equation_with_quadratic_terms(norm_matrix)[1]
         norm_matrix = make_equation_with_quadratic_terms(norm_matrix)[0]
+        counter2 += 1
     plan_matr_for_calc_Y = plan_matr
     N = len(plan_matr)
     Y_matrix = []
@@ -180,3 +184,6 @@ while flag_of_model is False:
     else:
         count += 1
         print("Рівняння регресії не є адекватним оригіналу.")
+        
+print("До ефекту взаємодії приходили ", counter1, " разів")
+print("До квадратичних членів приходили ", counter2, " разів")        
